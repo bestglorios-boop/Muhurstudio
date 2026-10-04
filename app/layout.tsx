@@ -37,6 +37,52 @@ const sans = Inter({
  */
 const ogUrl = site.siteUrl ? `${site.siteUrl}/og/og.svg` : null;
 
+/*
+ * YAPISAL VERİ — YALNIZCA DOĞRULANABİLİR OLAN.
+ *
+ * Neden ekleniyor: site gerçek bir işletmedir ve arama motorlarının
+ * "Organization" bilgisine ihtiyaç vardır. Ancak bu blok yalnızca elimizde
+ * GERÇEKTEN OLAN alanları taşır:
+ *
+ *   - name, description, email, url (varsa), logo, sameAs sosyal hesaplar
+ *   - address: YALNIZCA şehir/ülke. AÇIK ADRES YOKTUR ve uydurulmamıştır.
+ *   - contactPoint yalnızca e-posta üzerinden gerçek bir iletişim kanalıdır.
+ *
+ * BİLEREK YAZILMAYANLAR: aggregateRating, review, award, foundingDate,
+ * numberOfEmployees, vatID, taxID, sicil numarası, SAME AS'lı sahte hesaplar.
+ * Hiçbiri bu depoda mevcut değil; schema.org bunları "isteğe bağlı" kabul
+ * eder, ama YANLIŞ doldurulmuş hâli arama sonuçlarında doğrulanabilir bir
+ * yanlışlık olur.
+ *
+ * `site.siteUrl` boşken blok HİÇ ÜRETİLMEZ: `url` alanı olmayan bir
+ * Organization, localhost'a işaret eden bir Organization'dan daha iyidir —
+ * ve hiçbir şey üretmemek en dürüst seçenektir.
+ */
+const jsonLd =
+  site.siteUrl && ogUrl
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: site.name,
+        description: site.description,
+        url: site.siteUrl,
+        email: site.email,
+        logo: ogUrl,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: site.location.city,
+          addressCountry: "TR",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          email: site.email,
+          availableLanguage: ["Turkish"],
+        },
+        sameAs: [site.social.instagram, site.social.linkedin],
+      }
+    : null;
+
 export const metadata: Metadata = {
   metadataBase: site.siteUrl ? new URL(site.siteUrl) : undefined,
   title: {
@@ -128,6 +174,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
        * yine `min-h-dvh`. Yalnızca başlık artık sarmalayıcının dışında.
        */}
       <body className="flex min-h-dvh flex-col bg-ink text-on-ink">
+        {/* JSON-LD yalnızca üretim alan adı bilindiğinde basılır (yukarıya bak). */}
+        {jsonLd && (
+          <script
+            type="application/ld+json"
+            // Next.js içerik kaçırması zorunlu kılar: kullanıcı verisi değil,
+            // build sırasında üretilen sabit bir nesnedir.
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        )}
         <SkipLink />
         <Navigation />
         <div className="relative z-[2] flex flex-1 flex-col">

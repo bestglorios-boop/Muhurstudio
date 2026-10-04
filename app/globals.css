@@ -539,6 +539,30 @@ footer a.hairline {
 
 /* --- Yardımcılar -------------------------------------------- */
 
+/*
+ * YÜKLEME DAİRESİ (app/loading.tsx)
+ *
+ * Tek kural: bir tur. Süre, dönüş ve geçiş `globals.css`in genel
+ * `prefers-reduced-motion` kuralı tarafından ~0'a indirildiği için
+ * indirgemekte ek bir JS dalı veya `@media` bloğu GEREKMEZ — daire
+ * durur, görünür kalır.
+ *
+ * `border-color` animasyonu YOK: kenar `--line-ink` (#1A1A1A) olarak sabittir.
+ * Yanıp sönen bir halka "yükleme" demek için daha aşikâr olurdu, ama bu
+ * sitenin dili o değil.
+ */
+@keyframes seal-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.seal-loader {
+  animation: seal-loader-spin 1.4s linear infinite;
+  /* Daire görünür olsun: koyu zeminde #1A1A1A incedir ama kasıtlıdır. */
+  border-top-color: var(--on-ink-muted);
+}
+
 .rule {
   height: 1px;
   width: 100%;

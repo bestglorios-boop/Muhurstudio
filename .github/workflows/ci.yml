@@ -1,0 +1,48 @@
+name: CI
+
+# Yalnızca main ve PR'lar. Her push'ta çalışmasın diye ikisi de açık.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Aynı branch'te yeni push gelirse önceki koşum iptal edilir — gerekçesiz
+# paralel koşum, boşa dakika ve karışık log demektir.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint · Typecheck · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Kilit dosyası birebir kullanılır: `npm ci` ağacı package-lock.json
+      # ile birebir aynı kurar, sürüm kayması olmaz.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      # Adım adı çalıştırılır, `npm run verify` DEĞİL: tek adımda birleştirilirse
+      # hangisinin kırıldığı log'dan anlaşılmaz.
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      # Üretim bağımlılıklarında bilinen zafiyet. CI bunu yapılandırılmış bir
+      # hatadır; `--audit-level` varsayılanı (low) zaten başarısız olur.
+      - name: Üretim bağımlılık güvenlik denetimi
+        run: npm audit --omit=dev

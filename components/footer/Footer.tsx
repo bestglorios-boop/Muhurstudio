@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/data/site";
+import { legalNav } from "@/data/legal";
 import { Logo, MuhurGlyph } from "@/components/brand/MuhurMark";
 
 /**
@@ -92,6 +93,34 @@ export function Footer() {
             © {year} {site.name}
           </p>
         </div>
+
+        {/*
+         * Yasal satır — ayrı ve EN SON sırada.
+         *
+         * Neden ayrı satır: dört bağlantı sosyal satırının içine sıkıştırılırsa
+         * 320px'te alt alta dizilir ve telif satırıyla çakışma riski doğar.
+         * Kendi satırında hem mobilde okunur hem de mevcut footer yapısı
+         * (sütun sözleşmesi, M filigranı, kapanış cümlesi) bozulmaz.
+         *
+         * Metin `data/legal.ts`'den gelir; burada yalnızca YERLEŞİM tanımlıdır.
+         */}
+        <nav
+          aria-label="Yasal metinler"
+          className="border-t border-line-ink py-6"
+        >
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {legalNav.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="hairline inline-block py-0.5 text-[13px] text-on-ink-muted transition-colors duration-200 hover:text-on-ink"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
       {/* M filigranı: footer'ın kapanış imzası. Çok soluk, dekoratif değil yapısal. */}

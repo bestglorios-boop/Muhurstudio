@@ -8,18 +8,31 @@ import { existsSync } from "node:fs";
 
 const BASE = `http://localhost:${process.argv[2] || "3000"}`;
 
+/**
+ * Beklenen hedefler.
+ *
+ * DÜZELTME: "Proje Başlatalım" beklentisi eskiden `mailto:` idi. Bu artık
+ * YANLIŞTIR — birincil CTA doğrudan WhatsApp'a açıyor
+ * (data/site.ts → social.primaryActionHref). Beklenti güncellenmediği için
+ * betik gerçekte DOĞRU olan davranışı hata olarak raporluyordu.
+ */
 const EXPECT = [
   { l: "logo", s: 'header a[aria-label*="ana sayfa"]', w: "/" },
   { l: "Çalışmalar", t: "Çalışmalar", w: "/work" },
   { l: "Hizmetler", t: "Hizmetler", w: "/#hizmetler" },
   { l: "Yaklaşımımız", t: "Yaklaşımımız", w: "/#yaklasim" },
   { l: "Hakkımızda", t: "Hakkımızda", w: "/about" },
-  { l: "Proje Başlatalım", t: "Proje Başlatalım", w: "mailto:" },
+  { l: "Proje Başlatalım", t: "Proje Başlatalım", w: "https://wa.me/905399542171" },
   { l: "Notella", s: 'a[href*="/work/notella"]', w: "/work/notella" },
   { l: "Bursa Sofrası", s: 'a[href*="/work/bursa-sofrasi"]', w: "/work/bursa-sofrasi" },
   { l: "WhatsApp", s: 'a[href*="wa.me"]', w: "https://wa.me/905399542171" },
   { l: "Instagram", s: 'a[href*="instagram.com"]', w: "https://" },
   { l: "LinkedIn", s: 'a[href*="linkedin.com"]', w: "https://" },
+  // Yasal bağlantılar — footer'da kendi satırında.
+  { l: "Gizlilik Politikası", s: 'a[href="/gizlilik"]', w: "/gizlilik" },
+  { l: "KVKK Aydınlatma Metni", s: 'a[href="/kvkk"]', w: "/kvkk" },
+  { l: "Çerez Politikası", s: 'a[href="/cerezler"]', w: "/cerezler" },
+  { l: "Kullanım Koşulları", s: 'a[href="/kullanim-kosullari"]', w: "/kullanim-kosullari" },
 ];
 
 const chrome =

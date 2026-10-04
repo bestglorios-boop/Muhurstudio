@@ -30,8 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
+# Hiçbir sır depoya girmez. `.env.example` yalnızca DEĞERİSİZ anahtar
+# adları taşıyacaksa tutulabilir; bu depoda öyle bir dosya yok.
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -44,10 +47,15 @@ next-env.d.ts
 *.log
 /lh-*.json
 
-# yerel QA betiklerinin biraktigi gecici cikti / ekran goruntuleri
+# yerel QA betiklerinin bıraktığı geçici çıktı / ekran görüntüleri
 /audit/
 /shots/
 /qa-shots/
+/lighthouse-report/
 /*.err*
 /*.out*
 *.pid
+
+# geçici onarım/üretim betikleri (kök düzey, tek kullanımlık)
+/.*.mjs
+

@@ -1,12 +1,12 @@
-﻿/**
- * gate1.mjs â€” Â§5 + Â§6 kapak denetimi (henÃ¼z test edilmemiÅŸ olanlar):
- *   - mobil menÃ¼: aÃ§ / Escape ile kapat / rota tÄ±klayÄ±nca kapanÄ±r
- *   - gÃ¶vde kaydÄ±rma kilidi: menÃ¼ aÃ§Ä±kken kilitli, kapandÄ±ktan sonra Ã‡Ã–ZÃœLMELÄ°
- *   - menÃ¼ aÃ§Ä±kken body overflow:hidden kalÄ±yor mu
- *   - logo ana sayfaya gÃ¶tÃ¼rÃ¼r mÃ¼
- *   - /#hizmetler ve /#yaklasim DOÄžRUDAN yÃ¼klenir mi (anchor)
+/**
+ * gate1.mjs — §5 + §6 kapak denetimi (henüz test edilmemiş olanlar):
+ *   - mobil menü: aç / Escape ile kapat / rota tıklayınca kapanır
+ *   - gövde kaydırma kilidi: menü açıkken kilitli, kapandıktan sonra ÇÖZÜLMELİ
+ *   - menü açıkken body overflow:hidden kalıyor mu
+ *   - logo ana sayfaya götürür mü
+ *   - /#hizmetler ve /#yaklasim DOĞRUDAN yüklenir mi (anchor)
  *   - ileri/geri navigasyon + yenileme
- *   - hidrasyon uyuÅŸmazlÄ±ÄŸÄ±
+ *   - hidrasyon uyuşmazlığı
  */
 import puppeteer from "puppeteer-core";
 import { existsSync, appendFileSync } from "node:fs";
@@ -25,7 +25,7 @@ await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile
 await page.goto(ORIGIN + "/", { waitUntil: "load", timeout: 30000 });
 await new Promise((r) => setTimeout(r, 1500));
 
-/* --- gÃ¶vde kaydÄ±rma kilidi baÅŸlangÄ±cÄ± --- */
+/* --- gövde kaydırma kilidi başlangıcı --- */
 const govdeKilit = () => page.evaluate(() => {
   const ov = getComputedStyle(document.body).overflow;
   const se = getComputedStyle(document.documentElement).overflow;
@@ -33,7 +33,7 @@ const govdeKilit = () => page.evaluate(() => {
 });
 say("baslangic govde: " + JSON.stringify(await govdeKilit()));
 
-/* --- menÃ¼yÃ¼ AÃ‡ --- */
+/* --- menüyü AÇ --- */
 await page.evaluate(() => document.querySelector('button[aria-controls="mobil-menu"]')?.click());
 await new Promise((r) => setTimeout(r, 700));
 const acik = await page.evaluate(() => {
@@ -62,13 +62,13 @@ const escKapat = await page.evaluate(() => {
   };
 });
 say("ESC SONRASI: " + JSON.stringify(escKapat));
-say("  -> kilit Ã‡Ã–ZÃœLDÃœ mÃ¼: " + (escKapat.govdeKilitliMi ? "HAYIR <-- HATA" : "EVET"));
+say("  -> kilit ÇÖZÜLDÜ mü: " + (escKapat.govdeKilitliMi ? "HAYIR <-- HATA" : "EVET"));
 
-/* --- menÃ¼yÃ¼ tekrar aÃ§ ve rota tÄ±kla --- */
+/* --- menüyü tekrar aç ve rota tıkla --- */
 await page.evaluate(() => document.querySelector('button[aria-controls="mobil-menu"]')?.click());
 await new Promise((r) => setTimeout(r, 700));
 const tiklandi = await page.evaluate(() => {
-  const links = [...document.querySelectorAll("a")].filter((a) => (a.textContent || "").trim() === "Ã‡alÄ±ÅŸmalar");
+  const links = [...document.querySelectorAll("a")].filter((a) => (a.textContent || "").trim() === "Çalışmalar");
   const gorunur = links.find((a) => a.getClientRects().length > 0);
   if (gorunur) { gorunur.click(); return "tiklandi"; }
   return "gorunur link yok";
