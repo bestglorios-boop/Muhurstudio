@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Mühür Studio">
+  <!--
+    MÜHÜR STUDIO — GERÇEK MARKA İŞARETİ
+    Sekizgen mühür: dışta koyu sekizgen gövde, içinde ince açık sekizgen
+    halka, merkezde kalın ve derin V'li "M".
+    ÜRETİCİ: scripts/make-logo.mjs — bu dosya elle düzenlenmez.
+  -->
+  <polygon points="128,20 197.2,50.8 235.2,128 197.2,205.2 128,236 58.8,205.2 20.8,128 58.8,50.8" fill="#000000"/>
+  <polygon points="128,58 174.6,81.4 198,128 174.6,174.6 128,198 81.4,174.6 58,128 81.4,81.4" fill="none" stroke="#F5F2ED" stroke-width="5" stroke-linejoin="miter"/>
+  <path d="M92,164 92,88 114,88 128,118 142,88 164,88 164,164 144,164 144,118 128,152 112,118 112,164Z" fill="#F5F2ED"/>
+</svg>

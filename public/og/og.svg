@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#080808"/>
+
+  <!-- Tek kırmızı detay: mühürün altındaki çizgi -->
+  <rect x="80" y="486" width="120" height="4" fill="#C23B22"/>
+
+  <!-- Basınç konturları: çok ince, çok soluk -->
+  <g fill="none" stroke="#F5F2ED" stroke-opacity="0.05" stroke-width="1">
+    <ellipse cx="980" cy="300" rx="120" ry="108"/>
+    <ellipse cx="980" cy="300" rx="152" ry="137"/>
+    <ellipse cx="980" cy="300" rx="184" ry="166"/>
+    <ellipse cx="980" cy="300" rx="216" ry="194"/>
+    <ellipse cx="980" cy="300" rx="248" ry="223"/>
+  </g>
+
+  <!-- Mührün kendisi -->
+  <path d="M920 420V180h26l54 92 54-92h26v240h-30V262l-50 86-50-86v158Z" fill="#101010" stroke="#1F1F1F" stroke-width="1"/>
+
+  <text x="80" y="230" font-family="Georgia, 'Times New Roman', serif" font-size="86" fill="#F5F2ED" letter-spacing="-1.5">Mühür Studio</text>
+  <text x="80" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="60" fill="#A29C93" letter-spacing="-1">Dijital iz bırakır.</text>
+  <text x="80" y="420" font-family="Helvetica, Arial, sans-serif" font-size="19" letter-spacing="3.4" fill="#6E6862">BURSA · TÜRKİYE</text>
+  <text x="80" y="452" font-family="Helvetica, Arial, sans-serif" font-size="19" letter-spacing="3.4" fill="#6E6862">WEB TASARIM · FRONTEND</text>
+</svg>

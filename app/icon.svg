@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    Site/sekme ikonu. public/icons/logo.svg ile AYNI geometriden üretilir
+    (scripts/make-logo.mjs) — kırpmasız, çerçevesiz, yalnızca ölçeklenmiş.
+    Sekmede küçük göründüğü için kutuyu fill oranında doldurur.
+  -->
+  <rect width="64" height="64" fill="#080808"/>
+  <polygon points="32,1.92 51.27,10.5 61.86,32 51.27,53.5 32,62.08 12.73,53.5 2.14,32 12.73,10.5" fill="#000000"/>
+  <polygon points="32,12.5 44.98,19.02 51.5,32 44.98,44.98 32,51.5 19.02,44.98 12.5,32 19.02,19.02" fill="none" stroke="#F5F2ED" stroke-width="1.39" stroke-linejoin="miter"/>
+  <path d="M21.97,42.03 21.97,20.86 28.1,20.86 32,29.21 35.9,20.86 42.03,20.86 42.03,42.03 36.46,42.03 36.46,29.21 32,38.68 27.54,29.21 27.54,42.03Z" fill="#F5F2ED"/>
+</svg>
