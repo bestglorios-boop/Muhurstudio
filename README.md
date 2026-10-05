@@ -158,9 +158,15 @@ Statik çıktı üretir; herhangi bir Node.js barındırma, veritabanı veya sun
 tarafı çalışma zamanı gerekmez. Vercel'e bağlanabilir ya da `npm run build`
 sonrası `.next/` çıktısı herhangi bir Node barındırmaya verilebilir.
 
-Dağıtım sonrası yapılacak tek zorunlu iş: `data/site.ts` içindeki
-`site.siteUrl` değerini gerçek alan adıyla doldurmak. Bu olmadan canonical,
-sitemap ve sosyal önizleme adresleri üretilmez.
+### Yayın kontrol listesi
+
+1. **Alan adı:** Vercel → Settings → Environment Variables içinde
+   `NEXT_PUBLIC_SITE_URL=https://gercek-alan-adiniz` tanımlayın ve yeniden
+   dağıtın. Bu olmadan canonical, sitemap ve sosyal önizleme adresleri
+   üretilmez (bilerek — localhost sızmaz).
+2. **Önizleme:** dağıtım URL'sini açın, tüm rotaları ve WhatsApp CTA'yı
+   tıklayın.
+3. **Doğrulama:** `npm run verify` ve `npm run audit:prod` temiz olmalı.
 
 HTTPS kullanılmalıdır; `next.config.ts` HSTS başlığı yalnızca gerçek bir
 HTTPS alan adı olduğunda eklenmelidir.

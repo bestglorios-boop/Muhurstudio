@@ -13,8 +13,18 @@ export const site = {
   wordmarkShort: "MÜHÜR",
   tagline: "Dijital iz bırakır.",
 
-  /** Üretim alan adı bilinmiyorsa boş bırakılır. */
-  siteUrl: "",
+  /**
+   * Üretim alan adı.
+   *
+   * Öncelik: `NEXT_PUBLIC_SITE_URL` ortam değişkeni → boş (güvenli varsayılan).
+   * Boşken canonical/OG/sitemap/JSON-LD üretilmez; localhost sızmaz.
+   * Yayınlarken Vercel'de `NEXT_PUBLIC_SITE_URL=https://ornek-alan-adi`
+   * tanımlamak yeterlidir; koda sahte alan adı yazılmaz.
+   */
+  siteUrl:
+    (typeof process !== "undefined"
+      ? process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "")
+      : "") ?? "",
 
   description:
     "Bursa merkezli bağımsız web tasarım ve geliştirme stüdyosu. Web siteleri ve dijital deneyimler tasarlanır ve geliştirilir.",
