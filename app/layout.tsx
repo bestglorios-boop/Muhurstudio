@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site";
@@ -152,7 +153,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="tr" className={`${display.variable} ${sans.variable} antialiased`}>
       {/*
