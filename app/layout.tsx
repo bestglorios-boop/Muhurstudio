@@ -103,6 +103,30 @@ export const metadata: Metadata = {
   authors: [{ name: site.name }],
   creator: site.name,
   publisher: site.name,
+  /*
+   * ARAMA MOTORU SAHİPLİK DOĞRULAMASI — Google + Bing.
+   *
+   * NEDEN GÖVDEYE <meta> ETİKETİ DEĞİL: Next.js Metadata API kullanılır;
+   * Next.js bunları <head> içine
+   *   <meta name="google-site-verification" content="...">
+   *   <meta name="msvalidate.01" content="...">
+   * olarak basar. Sahiplik doğrulaması yalnızca <head> içindeki etiketi
+   * kabul eder, bu yüzden doğru yer metadata'dır.
+   *
+   * Bing'in jetonu Next.js'te AYRI bir alan DEĞİLDİR; `verification.other`
+   * haritasına meta adı ("msvalidate.01") anahtar olarak yazılır. Böylece
+   * etiket elle tekrar EDİLMEZ; tek kaynak burasıdır.
+   *
+   * Bu alanlar site.siteUrl'e BAĞLI DEĞİLDİR: sahiplik doğrulaması alan
+   * adından bağımsızdır ve jetonlar uydurulmuş bir alan adı değil, gerçek
+   * site kimliğinin bir parçasıdır.
+   */
+  verification: {
+    google: "a-rziMpBcQfEl8zX2piT-uVOKkttmFdv4VvebvMDYfw",
+    other: {
+      "msvalidate.01": "DEEEFB9AD1DDE19DAC2AC921D3D8A1FE",
+    },
+  },
   // Alan adı bilinmiyorsa canonical HİÇ üretilmez. Üretilirse Next.js
   // metadataBase olmadığı için "http://localhost:3000" yazar ve bu geçersiz
   // bir canonical olur (SEO puanını düşürür). Alan adı girilince kendiliğinden
