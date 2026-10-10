@@ -103,6 +103,22 @@ export const metadata: Metadata = {
   authors: [{ name: site.name }],
   creator: site.name,
   publisher: site.name,
+  /*
+   * Google Search Console sahiplik doğrulaması.
+   *
+   * NEDEN GÖVDEYE <meta> ETİKETİ DEĞİL: Next.js Metadata API kullanılır;
+   * Next.js bunu <head> içine
+   *   <meta name="google-site-verification" content="...">
+   * olarak basar. Arama motoru doğrulaması yalnızca <head> içindeki etiketi
+   * kabul eder, bu yüzden doğru yer metadata'dır.
+   *
+   * Bu alan site.siteUrl'e BAĞLI DEĞİLDİR: sahiplik doğrulaması alan adından
+   * bağımsızdır ve jeton uydurulmuş bir alan adı değil, gerçek site
+   * kimliğinin bir parçasıdır.
+   */
+  verification: {
+    google: "a-rziMpBcQfEl8zX2piT-uVOKkttmFdv4VvebvMDYfw",
+  },
   // Alan adı bilinmiyorsa canonical HİÇ üretilmez. Üretilirse Next.js
   // metadataBase olmadığı için "http://localhost:3000" yazar ve bu geçersiz
   // bir canonical olur (SEO puanını düşürür). Alan adı girilince kendiliğinden
