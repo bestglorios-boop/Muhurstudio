@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation/Navigation";
 import { Footer } from "@/components/footer/Footer";
 import { SkipLink } from "@/components/motion/SkipLink";
 import { WhatsAppButton } from "@/components/contact/WhatsAppButton";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const display = Instrument_Serif({
   subsets: ["latin"],
@@ -193,6 +194,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Footer />
         </div>
         <WhatsAppButton />
+        <SpeedInsights />
       </body>
     </html>
   );
