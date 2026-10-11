@@ -25,12 +25,21 @@ const sans = Inter({
 });
 
 /*
- * OG/Twitter görseli YALNIZCA üretim alan adı bilindiğinde üretilir.
+ * SOSYAL ÖNİZLEME GÖRSELİ — PNG + MUTLAK ADRES.
  *
- * NEDEN (ölçülen hata): göreli "/og/og.svg" verildiğinde Next.js onu
- * `metadataBase`e göre MUTLAKLAŞTIRIR. metadataBase tanımsızken Next'in
- * varsayılanı http://localhost:3000 olduğu için sunucudan çıkan HTML'de
- *   <meta property="og:image" content="http://localhost:3000/og/og.svg">
+ * NEDEN SVG DEĞİL (ölçülen hata): Facebook/X önizleme kartları SVG'yi
+ * rasterleştirmez. `og:image` "/og/og.svg" olduğu sürece Sharing Debugger
+ * başlık, açıklama ve alt metni doğru okusa da KART BOŞ kalıyordu. Kart
+ * tarayıcılarının beklediği biçim rasterdir: 1200×630 PNG.
+ *
+ * Kaynak vektör `public/og/og.svg` KORUNUR (tasarımın tek kaynağı); servis
+ * edilen dosya onun birebir rasterleştirilmiş hâli `public/og/og.png`.
+ * İkisi de aynı tasarımı taşır; PNG yalnızca yeniden üretilmiş hâlidir.
+ *
+ * NEDEN MUTLAK: göreli bir yol verildiğinde Next.js onu `metadataBase`e göre
+ * MUTLAKLAŞTIRIR. metadataBase tanımsızken Next'in varsayılanı
+ * http://localhost:3000 olduğu için sunucudan çıkan HTML'de
+ *   <meta property="og:image" content="http://localhost:3000/og/og.png">
  * yazıyordu. Yayına çıktığında sosyal önizlemeler kırık olurdu.
  *
  * Çözüm, dosyanın kendi kuralının aynısı: canonical gibi — alan adı
@@ -38,7 +47,19 @@ const sans = Inter({
  * `site.siteUrl` doldurulduğu an hem canonical hem OG görseli
  * kendiliğinden doğru mutlak adresle çalışır.
  */
-const ogUrl = site.siteUrl ? `${site.siteUrl}/og/og.svg` : null;
+const ogImageUrl = site.siteUrl ? `${site.siteUrl}/og/og.png` : null;
+
+/*
+ * JSON-LD `logo` — BİLEREK AYRI SABİT.
+ *
+ * `logo` MARKA KİMLİĞİDİR; sosyal önizleme görseli değildir. OG görseli
+ * PNG'ye taşınırken bu alanın kendiliğinden PNG'ye kaymaması gerekir —
+ * aksi hâlde Organization kimliği sessizce paylaşım kartına dönüşürdü.
+ * Bu yüzden `logo` MEVCUT değerini (public/og/og.svg) aynen korur.
+ * Marka dosyasının kendisi public/icons/logo.svg'tir; oraya taşımak
+ * AYRI ve bilinçli bir karardır, bu değişikliğin kapsamında değildir.
+ */
+const logoUrl = site.siteUrl ? `${site.siteUrl}/og/og.svg` : null;
 
 /*
  * YAPISAL VERİ — YALNIZCA DOĞRULANABİLİR OLAN.
@@ -62,7 +83,7 @@ const ogUrl = site.siteUrl ? `${site.siteUrl}/og/og.svg` : null;
  * ve hiçbir şey üretmemek en dürüst seçenektir.
  */
 const jsonLd =
-  site.siteUrl && ogUrl
+  site.siteUrl && logoUrl
     ? {
         "@context": "https://schema.org",
         "@type": "Organization",
@@ -70,7 +91,7 @@ const jsonLd =
         description: site.description,
         url: site.siteUrl,
         email: site.email,
-        logo: ogUrl,
+        logo: logoUrl,
         address: {
           "@type": "PostalAddress",
           addressLocality: site.location.city,
@@ -141,15 +162,23 @@ export const metadata: Metadata = {
     title: site.meta.title,
     description: site.meta.description,
     url: site.siteUrl || undefined,
-    images: ogUrl
-      ? [{ url: ogUrl, width: 1200, height: 630, alt: `${site.name} — ${site.tagline}` }]
+    images: ogImageUrl
+      ? [
+          {
+            url: ogImageUrl,
+            type: "image/png",
+            width: 1200,
+            height: 630,
+            alt: `${site.name} — ${site.tagline}`,
+          },
+        ]
       : undefined,
   },
   twitter: {
     card: "summary_large_image",
     title: site.meta.title,
     description: site.meta.description,
-    images: ogUrl ? [ogUrl] : undefined,
+    images: ogImageUrl ? [ogImageUrl] : undefined,
   },
   robots: {
     index: true,

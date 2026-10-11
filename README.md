@@ -83,7 +83,8 @@ data/                    İÇERİĞİN TEK KAYNAĞI
 
 public/
   icons/logo.svg         gerçek marka dosyası (üretici: scripts/make-logo.mjs)
-  og/og.svg              sosyal önizleme görseli
+  og/og.svg              sosyal önizleme görseli — KAYNAK (vektör, 1200×630)
+  og/og.png              sosyal önizleme görseli — SERVİS EDİLEN (1200×630 PNG)
   projects/<slug>/       arşiv plakaları (üretici: scripts/make-plates.mjs)
 
 ### İçerik değiştirme
