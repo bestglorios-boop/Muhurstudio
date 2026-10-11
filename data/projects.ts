@@ -61,7 +61,14 @@ export interface Project {
    */
   cover: string;
   coverAlt: string;
-  /** 2–6 arası görsel. Fazlası arşiv hissini bozar, ölçülü tutun. */
+  /**
+   * 2–6 arası görsel. Fazlası arşiv hissini bozar, ölçülü tutun.
+   *
+   * ALT KURALI: `alt` yalnızca görsel GERÇEKTEN bilgi taşıyorsa doldurulur.
+   * Kapakla aynı dosya olan ya da aynı sayfada tekrar eden bir plaka
+   * yinelemedir → `alt=""` (ekran okuyucu aynı plakayı iki kez okumaz).
+   * Dekoratif/boş `alt` meşrudur; UYDURMA açıklama yazılmaz.
+   */
   gallery?: { src: string; alt: string; ratio: Exclude<Ratio, "21/9"> }[];
   /** Görsel oranı — arşivin tek bir kalıba indirgenmemesi için. */
   coverRatio: Ratio;
@@ -94,10 +101,14 @@ export const projects: Project[] = [
     role: "Konsept, tasarım, frontend",
     cover: "/projects/notella/kapak.svg",
     coverAlt:
-      "Notella için üretilmiş nötr arşiv plağı: ince kontur halkaları ve tipografik indeks.",
+      "Notella arşiv plakası: koyu zemin üzerinde iç içe ince elips konturları; altta proje adı ve arşiv etiketi.",
     coverRatio: "3/2",
     gallery: [
-      { src: "/projects/notella/kapak.svg", alt: "Notella arşiv plakası — kontur alanı.", ratio: "3/2" },
+      // Kapakla AYNI dosya (kapak.svg) ve aynı oran: bu plaka aynı sayfada
+      // kapaktan hemen sonra tekrar görünür. Görsel KALIR (tasarım/ölçü
+      // değişmez) ama `alt=""` ile yineleme olarak işaretlenir; ekran
+      // okuyucu aynı plakayı iki kez anlatmaz.
+      { src: "/projects/notella/kapak.svg", alt: "", ratio: "3/2" },
       { src: "/projects/notella/kapak-2.svg", alt: "Notella arşiv plakası — dikey kural dizisi.", ratio: "4/5" },
     ],
     aim: [
@@ -128,11 +139,17 @@ export const projects: Project[] = [
     role: "Konsept, tasarım, frontend",
     cover: "/projects/bursa-sofrasi/kapak.svg",
     coverAlt:
-      "Bursa Sofrası için üretilmiş nötr arşiv plağı: çapraz saç teli tarama bloğu.",
+      "Bursa Sofrası arşiv plakası: koyu zemin üzerinde çapraz ince çizgi taraması; altta proje adı ve arşiv etiketi.",
     coverRatio: "16/9",
     gallery: [
-      { src: "/projects/bursa-sofrasi/kapak.svg", alt: "Bursa Sofrası arşiv plakası — çapraz tarama.", ratio: "16/9" },
-      { src: "/projects/bursa-sofrasi/kapak-2.svg", alt: "Bursa Sofrası arşiv plakası — iki sütunlu dikey düzen.", ratio: "4/5" },
+      // Kapakla AYNI dosya (kapak.svg) ve aynı oran: yineleme → `alt=""`
+      // (yukarıdaki Notella notuyla aynı gerekçe).
+      { src: "/projects/bursa-sofrasi/kapak.svg", alt: "", ratio: "16/9" },
+      // ÖLÇÜLEN İÇERİK: plakada BEŞ dikey kural ve KISALAN yatay ölçü
+      // çizgileri var (public/projects/bursa-sofrasi/kapak-2.svg).
+      // Eski metin ("iki sütunlu dikey düzen") plakada olmayan bir şeyi
+      // anlatıyordu; alt metin varlığın kendisine göre düzeltildi.
+      { src: "/projects/bursa-sofrasi/kapak-2.svg", alt: "Bursa Sofrası arşiv plakası — dikey kurallar ve kısalan yatay ölçü çizgileri.", ratio: "4/5" },
     ],
     aim: [
       "Bursa Sofrası için sade, tek sayfalık ve içeriğin hızlı okunabildiği bir restoran web deneyimi araştırdık.",

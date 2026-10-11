@@ -61,12 +61,21 @@ function isSvg(src: string) {
   return src.split("?")[0].toLowerCase().endsWith(".svg");
 }
 
-/** Görsel yüklenemezse: kırık görsel değil, markalı nötr bir yüzey. */
+/**
+ * Görsel yüklenemezse: kırık görsel değil, markalı nötr bir yüzey.
+ *
+ * `alt=""` (dekoratif / yineleme) durumunda `role="img"` + boş ad
+ * KULLANILMAZ: erişilebilir adı olmayan bir görsel, ekran okuyucuda
+ * "resim" diye okunur ve WCAG 1.1.1'i ihlal eder. Bu durumda yedek yüzey
+ * erişim ağacından tamamen çıkarılır. Tasarım, ölçü ve sınıflar aynıdır.
+ */
 function ImageFallback({ alt }: { alt: string }) {
+  const yineleme = alt.trim() === "";
   return (
     <div
-      role="img"
-      aria-label={alt}
+      role={yineleme ? undefined : "img"}
+      aria-hidden={yineleme ? true : undefined}
+      aria-label={yineleme ? undefined : alt}
       className="absolute inset-0 flex items-end justify-between border border-line-ink p-5"
     >
       <span className="label text-on-ink-muted">Görsel</span>
