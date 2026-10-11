@@ -12,6 +12,7 @@
     "audit:prod": "npm audit --omit=dev"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "motion": "^13.4.3",
     "next": "16.4.0",
     "react": "19.2.8",
